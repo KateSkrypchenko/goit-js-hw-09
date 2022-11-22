@@ -6,6 +6,7 @@ const refs = {
 
 const TIME_CHANGE = 1000;
 let timerId = null;
+refs.buttonStop.disabled = true;
 
 refs.buttonStart.addEventListener('click', onStartChangeColor);
 refs.buttonStop.addEventListener('click', onStoptChangeColor);
@@ -21,10 +22,12 @@ function onGetColorBody() {
 
 function onStartChangeColor() {
   refs.buttonStart.disabled = true;
+  refs.buttonStop.disabled = false;
   timerId = setInterval(onGetColorBody, TIME_CHANGE);
 }
 
 function onStoptChangeColor() {
   refs.buttonStart.disabled = false;
+  refs.buttonStop.disabled = true;
   clearInterval(timerId);
 }
