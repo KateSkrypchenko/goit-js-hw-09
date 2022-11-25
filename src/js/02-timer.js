@@ -12,8 +12,6 @@ const refs = {
 };
 const TIME_CHANGE = 1000;
 let selectedTime = null;
-let currentTime = null;
-let deltaTime = null;
 let idInterval = null;
 refs.buttonStart.disabled = true;
 
@@ -23,12 +21,12 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    if (selectedDates[0].getTime() < options.defaultDate.getTime()) {
+    selectedTime = selectedDates[0].getTime();
+    if (selectedTime < Date.now()) {
       return Notify.failure('Please choose a date in the future');
     }
     console.log(selectedDates[0]);
     refs.buttonStart.disabled = false;
-    selectedTime = selectedDates[0].getTime();
   },
 };
 
@@ -37,11 +35,12 @@ function onStartTimer() {
   refs.inputDate.disabled = true;
 
   idInterval = setInterval(() => {
-    currentTime = Date.now();
-    deltaTime = selectedTime - currentTime;
+    const currentTime = Date.now();
+    const deltaTime = selectedTime - currentTime;
     changeTimer(deltaTime);
     if (deltaTime < 1000) {
       stopTimer();
+      refs.inputDate.disabled = false;
     }
   }, TIME_CHANGE);
 }

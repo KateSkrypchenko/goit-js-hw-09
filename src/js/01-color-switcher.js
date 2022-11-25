@@ -21,13 +21,16 @@ function onGetColorBody() {
 }
 
 function onStartChangeColor() {
-  refs.buttonStart.disabled = true;
-  refs.buttonStop.disabled = false;
+  toggleDisableButton(true, false);
   timerId = setInterval(onGetColorBody, TIME_CHANGE);
 }
 
 function onStoptChangeColor() {
-  refs.buttonStart.disabled = false;
-  refs.buttonStop.disabled = true;
+  toggleDisableButton(false, true);
   clearInterval(timerId);
+}
+
+function toggleDisableButton(buttonStart, buttonStop) {
+  refs.buttonStart.disabled = buttonStart;
+  refs.buttonStop.disabled = buttonStop;
 }
